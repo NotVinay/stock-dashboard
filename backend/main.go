@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
+
+	"github.com/NotVinay/stock-dashboard/backend/config"
 )
 
 // Response structure for API responses
@@ -41,19 +42,15 @@ func healthCheck(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	// Get port from environment variable or use default
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
+	cfg := config.GetAppConfig()
 
 	// Setup routes
 	http.HandleFunc("/", enableCORS(healthCheck))
 	http.HandleFunc("/api/health", enableCORS(healthCheck))
 
 	// Start server
-	fmt.Printf("Server starting on port %s...\n", port)
-	if err := http.ListenAndServe(":"+port, nil); err != nil {
+	fmt.Printf("Server starting on port %s...\n", cfg.Port)
+	if err := http.ListenAndServe(":"+cfg.Port, nil); err != nil {
 		log.Fatal("Server failed to start:", err)
 	}
 }
