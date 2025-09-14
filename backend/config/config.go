@@ -10,6 +10,7 @@ import (
 // Config represents the application configuration.
 type Config struct {
 	FinnhubAPIKey   string
+	FinnhubAPIURL   string
 	Port            string
 	WSPort          string
 	AllowedOrigins  []string
@@ -33,6 +34,7 @@ func loadConfig() *Config {
 
 	appConfig = &Config{
 		FinnhubAPIKey:  getEnv("FINNHUB_API_KEY", ""),
+		FinnhubAPIURL:  getEnv("FINNHUB_API_URL", "https://finnhub.io/api/v1"),
 		Port:           getEnv("PORT", "8080"),
 		WSPort:         getEnv("WS_PORT", "8081"),
 		Environment:    getEnv("ENV", "development"),
